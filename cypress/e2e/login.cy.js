@@ -1,7 +1,10 @@
 describe('login', () => {
+  beforeEach(() => {
+    //arrange
+    cy.visit('http://localhost:4000') // vai ocorrer todas as vezes antes do "it"
+  })
+
   it('login com dados validos deve permitir acesso', () => {
-    //arrege
-    cy.visit('http://localhost:4000')
     //act
     cy.get('#username').click().type('julio.lima')
     cy.get('#senha').click().type('123456')
@@ -11,8 +14,6 @@ describe('login', () => {
   })
 
    it('Não deve permitir acesso e deve demonstrar toat com mensagem', () => {
-    //arrege
-    cy.visit('http://localhost:4000')
     //act
     cy.get('#username').click().type('julio.lima')
     cy.get('#senha').click().type('000000')
