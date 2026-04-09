@@ -8,9 +8,11 @@ describe('login', () => {
     //act
     cy.get('#username').click().type('julio.lima')
     cy.get('#senha').click().type('123456')
+    cy.screenshot('Após acessar url e preencher os dados')
     cy.contains('button', 'Entrar').click()
     //assert
     cy.contains('h4', 'Realizar Transferência').should('be.visible')
+    cy.screenshot('Login concluido com sucesso')
   })
 
    it('Não deve permitir acesso e deve demonstrar toat com mensagem', () => {
