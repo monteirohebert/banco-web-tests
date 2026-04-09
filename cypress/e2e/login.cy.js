@@ -6,8 +6,11 @@ describe('login', () => {
 
   it('login com dados validos deve permitir acesso', () => {
     //act
-    cy.get('#username').click().type('julio.lima')
-    cy.get('#senha').click().type('123456')
+    cy.fixture('credencias').then(credencias => {
+      cy.get('#username').click().type(credencias.validas.usuario)
+      cy.get('#senha').click().type(credencias.validas.senha)
+    })
+      
     cy.screenshot('Após acessar url e preencher os dados')
     cy.contains('button', 'Entrar').click()
     //assert
@@ -15,7 +18,11 @@ describe('login', () => {
     cy.screenshot('Login concluido com sucesso')
   })
 
-   it('Não deve permitir acesso e deve demonstrar toat com mensagem', () => {
+  it('Não deve permitir acesso e deve demonstrar toat com mensagem', () => {
+     cy.fixture('credencias').then(credencias => {
+      cy.get('#username').click().type(credencias.invalidas.usuario)
+      cy.get('#senha').click().type(credencias.invalidas.senha)
+    })
     //act
     cy.get('#username').click().type('julio.lima')
     cy.get('#senha').click().type('000000')
