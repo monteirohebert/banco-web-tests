@@ -1,7 +1,7 @@
 describe('login', () => {
   beforeEach(() => {
     //arrange
-    cy.visit(Cypress.env("URL")); // vai ocorrer todas as vezes antes do "it"
+    cy.visit('/'); // chama baseUrl do cypress.config.js
   })
 
   it('login com dados validos deve permitir acesso', () => {
