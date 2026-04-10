@@ -1,7 +1,7 @@
 describe('login', () => {
   beforeEach(() => {
     //arrange
-    cy.visit('http://localhost:4000') // vai ocorrer todas as vezes antes do "it"
+    cy.visit(Cypress.env("URL")); // vai ocorrer todas as vezes antes do "it"
   })
 
   it('login com dados validos deve permitir acesso', () => {
@@ -28,7 +28,7 @@ describe('login', () => {
     cy.get('#senha').click().type('000000')
     cy.contains('button', 'Entrar').click()
     //assert
-     cy.get('.toast').should('have.text', 'Erro no login. Tente novamente.')
+    cy.get('.toast').should('have.text', 'Erro no login. Tente novamente.')
      
   })
 })
