@@ -1,34 +1,26 @@
-describe.only('transferencias', () => {
+describe('transferencias', () => {
     beforeEach(() => {
         //Arrage
         cy.visit('/')
-        
-        cy.fixture('credencias').then(credencias => {
-        cy.get('#username').click().type(credencias.validas.usuario)
-        cy.get('#senha').click().type(credencias.validas.senha)
-        })
-            
-        cy.contains('button', 'Entrar').click()
+        cy.fazerLoginCredenciasValidas();
     })
     
     it('Deve transferir quando informo um valor valido', () => {
-        //Act-conta origem
-        cy.get('label[for="conta-origem"]').parent().as('campo-conta-oringem')//seleciona elemento pai da label eaplica um apelido 
-        cy.get('@campo-conta-oringem').click()//utiliza o elemento que foiaplicado o apelido
-        cy.get('@campo-conta-oringem').contains('João da Silva com saldo de R$').click()
+        //Act-conta origem/destino
+        
+        cy.realizarTransferencia('João da Silva com saldo de R$', 'Maria Oliveira com saldo de R$', '11')
+        //Assert- Verifica mensagem do Toast
 
-        //Act-conta destino
-        cy.get('label[for="conta-destino"]').parent().as('campo-conta-destino')
-        cy.get('@campo-conta-destino').click()
-        cy.get('@campo-conta-destino').contains('Maria Oliveira com saldo de R$').click()
+        cy.verificarMensagemNoToast('Transferência realizada!')
+        
+    })
 
-        //Act-valor
-        cy.get('#valor').click()
-        cy.get('label[for="valor"]').type('11')
-        cy.contains('button', 'Transferir').click()
+    it('Deve apresentar erro quando o valor transferiso for maior que 5000 sem token', () => {
+        //Act-conta origem/destino
+        cy.realizarTransferencia('João da Silva com saldo de R$', 'Maria Oliveira com saldo de R$', '5001')
 
-        //Assert
-        cy.get('.toast').should('have.text','Transferência realizada!')
+        //Assert- Verifica mensagem do Toast
+        cy.verificarMensagemNoToast('Autenticação necessária para transferências acima de R$5.000,00.')
         
     })
 })
