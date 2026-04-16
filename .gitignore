@@ -140,6 +140,8 @@ vite.config.ts.timestamp-*
 
 # Cypress
 cypress/screenshots
+cypress/reports
+cypress/videos
 
 # Variaveis de ambiente
 cypress.env.json
